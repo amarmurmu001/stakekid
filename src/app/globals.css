@@ -168,3 +168,8 @@ body {
   background: var(--stake-yellow);
   color: var(--stake-text-dark);
 }
+
+/* Ensure text color is white in the rich text editor */
+.mdxeditor-editor div[contenteditable="true"] * {
+  color: #ffffff !important;
+}

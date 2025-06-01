@@ -18,7 +18,7 @@ export default function AdminPanel() {
     const password = formData.get('password') as string;
 
     // Simple authentication for demo purposes
-    if (username === 'admin' && password === 'password') {
+    if (username === 'iron57441@gmail.com' && password === 'Mindc1a$h') {
       setIsAuthenticated(true);
       setLoginError('');
     } else {

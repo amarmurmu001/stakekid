@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@mdxeditor/editor": "^3.35.0",
     "@types/mongoose": "^5.11.96",
     "framer-motion": "^12.15.0",
     "mongodb": "^6.16.0",

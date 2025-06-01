@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { FaArrowLeft } from 'react-icons/fa';
 import { usePosts } from '@/hooks/usePosts';
+import RichTextEditor from '@/components/RichTextEditor';
 
 interface Post {
   _id: string;
@@ -44,13 +45,12 @@ export default function EditPost({ params }: { params: { postId: string } }) {
     e.preventDefault();
     if (!post) return;
 
-    const formData = new FormData(e.currentTarget);
     const updatedData = {
-      title: formData.get('title') as string,
-      author: formData.get('author') as string,
-      excerpt: formData.get('excerpt') as string,
-      content: formData.get('content') as string,
-      slug: formData.get('slug') as string,
+      title: post.title,
+      author: post.author,
+      excerpt: post.excerpt,
+      content: post.content,
+      slug: post.slug,
     };
 
     const success = await updatePost(post._id, updatedData);
@@ -119,7 +119,8 @@ export default function EditPost({ params }: { params: { postId: string } }) {
               type="text"
               id="title"
               name="title"
-              defaultValue={post.title}
+              value={post.title}
+              onChange={(e) => setPost({ ...post, title: e.target.value })}
               required
               className="w-full bg-slate-900 rounded-lg border border-slate-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
@@ -133,7 +134,8 @@ export default function EditPost({ params }: { params: { postId: string } }) {
               type="text"
               id="author"
               name="author"
-              defaultValue={post.author}
+              value={post.author}
+              onChange={(e) => setPost({ ...post, author: e.target.value })}
               required
               className="w-full bg-slate-900 rounded-lg border border-slate-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />
@@ -146,7 +148,8 @@ export default function EditPost({ params }: { params: { postId: string } }) {
             <textarea
               id="excerpt"
               name="excerpt"
-              defaultValue={post.excerpt}
+              value={post.excerpt}
+              onChange={(e) => setPost({ ...post, excerpt: e.target.value })}
               required
               rows={3}
               className="w-full bg-slate-900 rounded-lg border border-slate-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
@@ -157,13 +160,10 @@ export default function EditPost({ params }: { params: { postId: string } }) {
             <label htmlFor="content" className="block text-sm font-medium mb-2">
               Content
             </label>
-            <textarea
-              id="content"
-              name="content"
-              defaultValue={post.content}
-              required
-              rows={10}
-              className="w-full bg-slate-900 rounded-lg border border-slate-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            <RichTextEditor
+              markdown={post.content}
+              onChange={(content) => setPost({ ...post, content })}
+              className="bg-slate-900 border border-slate-700 rounded-lg overflow-hidden"
             />
           </div>
 
@@ -175,7 +175,8 @@ export default function EditPost({ params }: { params: { postId: string } }) {
               type="text"
               id="slug"
               name="slug"
-              defaultValue={post.slug}
+              value={post.slug}
+              onChange={(e) => setPost({ ...post, slug: e.target.value })}
               required
               className="w-full bg-slate-900 rounded-lg border border-slate-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
             />

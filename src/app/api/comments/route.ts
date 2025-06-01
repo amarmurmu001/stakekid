@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { connectToDatabase } from '@/lib/mongodb';
+import  connectDB  from '@/lib/mongodb';
 import Comment from '@/models/Comment';
 
 export async function POST(request: NextRequest) {
   try {
-    await connectToDatabase();
+    await connectDB();
     const data = await request.json();
 
     // Validate required fields
@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
 export async function GET(request: NextRequest) {
   try {
-    await connectToDatabase();
+    await connectDB();
     const { searchParams } = new URL(request.url);
     const postId = searchParams.get('postId');
     const status = searchParams.get('status') || 'approved';

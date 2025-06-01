@@ -11,19 +11,31 @@ export default function AdminPanel() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loginError, setLoginError] = useState('');
 
+  useEffect(() => {
+    const authStatus = localStorage.getItem('adminAuth');
+    if (authStatus === 'true') {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const username = formData.get('username') as string;
     const password = formData.get('password') as string;
 
-    // Simple authentication for demo purposes
     if (username === 'iron57441@gmail.com' && password === 'Mindc1a$h') {
       setIsAuthenticated(true);
+      localStorage.setItem('adminAuth', 'true');
       setLoginError('');
     } else {
       setLoginError('Invalid credentials');
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('adminAuth');
   };
 
   const handleDelete = async (postId: string) => {

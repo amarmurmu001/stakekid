@@ -22,11 +22,19 @@ export default function AdminLayout({
             <Link href="/blog" className="text-slate-200 hover:text-yellow-500 transition-colors">
               View Blog
             </Link>
+            <button
+              onClick={() => {
+                localStorage.removeItem('adminAuth');
+                window.location.href = '/admin';
+              }}
+              className="text-slate-200 hover:text-yellow-500 transition-colors"
+            >
+              Logout
+            </button>
           </div>
         </nav>
       </header>
-
-      {children}
+      <main className="pt-16">{children}</main>
     </div>
   );
 }

@@ -14,19 +14,17 @@ interface MongooseCache {
 }
 
 declare global {
-  var mongoose: {
-    conn: typeof mongoose | null;
-    promise: Promise<typeof mongoose> | null;
-  } | undefined;
+  var mongoose: MongooseCache | undefined;
 }
 
-let cached = global.mongoose;
-
-if (!cached) {
-  cached = global.mongoose = { conn: null, promise: null };
+// Initialize the cache if it doesn't exist
+if (!global.mongoose) {
+  global.mongoose = { conn: null, promise: null };
 }
 
-async function connectDB() {
+const cached = global.mongoose;
+
+export async function connectDB() {
   console.log('Attempting to connect to MongoDB...');
   
   if (cached.conn) {
@@ -35,25 +33,15 @@ async function connectDB() {
   }
 
   if (!cached.promise) {
+    console.log('Creating new connection...');
     const opts = {
-      bufferCommands: true,
+      bufferCommands: false,
     };
 
-    console.log('Creating new connection...');
-    cached.promise = mongoose.connect(MONGODB_URI, opts)
-      .then((mongoose) => {
-        console.log('MongoDB connected successfully');
-        return mongoose;
-      })
-      .catch((error) => {
-        console.error('MongoDB connection error details:', {
-          name: error.name,
-          message: error.message,
-          code: error.code,
-          codeName: error.codeName
-        });
-        throw error;
-      });
+    cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
+      console.log('Successfully connected to MongoDB');
+      return mongoose;
+    });
   }
 
   try {

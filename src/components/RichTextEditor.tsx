@@ -53,7 +53,7 @@ export default function RichTextEditor({ markdown, onChange, className = '' }: R
             ),
           }),
         ]}
-        contentEditableClassName="prose prose-invert max-w-none min-h-[200px] p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-slate-900 text-slate-100"
+        contentEditableClassName="prose prose-invert max-w-none min-h-[200px] p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-slate-900 text-white"
       />
     </div>
   );

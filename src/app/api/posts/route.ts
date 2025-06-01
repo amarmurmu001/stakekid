@@ -3,12 +3,26 @@ import connectDB from '@/lib/mongodb';
 import Post from '@/models/Post';
 
 export async function GET() {
+  console.log('GET /api/posts - Fetching posts...');
   try {
     await connectDB();
+    console.log('Database connected, querying posts...');
     const posts = await Post.find({}).sort({ createdAt: -1 });
+    console.log(`Found ${posts.length} posts`);
     return NextResponse.json(posts);
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
+    console.error('Error fetching posts:', {
+      name: error instanceof Error ? error.name : 'Unknown error',
+      message: error instanceof Error ? error.message : 'An unknown error occurred',
+      stack: error instanceof Error ? error.stack : undefined
+    });
+    return NextResponse.json(
+      { 
+        error: 'Failed to fetch posts',
+        details: error instanceof Error ? error.message : 'Unknown error'
+      }, 
+      { status: 500 }
+    );
   }
 }
 

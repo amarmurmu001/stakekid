@@ -1,19 +1,7 @@
 'use client';
 
-import { MDXEditor, headingsPlugin, listsPlugin, quotePlugin, thematicBreakPlugin, linkPlugin, imagePlugin, tablePlugin, codeBlockPlugin, toolbarPlugin, markdownShortcutPlugin } from '@mdxeditor/editor';
-import '@mdxeditor/editor/style.css';
-import {
-  UndoRedo,
-  BoldItalicUnderlineToggles,
-  BlockTypeSelect,
-  CreateLink,
-  InsertImage,
-  InsertTable,
-  InsertThematicBreak,
-  ListsToggle,
-  CodeToggle
-} from '@mdxeditor/editor';
-
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
 
 interface RichTextEditorProps {
   markdown: string;
@@ -24,36 +12,18 @@ interface RichTextEditorProps {
 export default function RichTextEditor({ markdown, onChange, className = '' }: RichTextEditorProps) {
   return (
     <div className={`w-full ${className}`}>
-      <MDXEditor
-        markdown={markdown}
+      <SimpleMDE
+        value={markdown}
         onChange={onChange}
-        plugins={[
-          headingsPlugin(),
-          listsPlugin(),
-          quotePlugin(),
-          thematicBreakPlugin(),
-          markdownShortcutPlugin(),
-          linkPlugin(),
-          imagePlugin(),
-          tablePlugin(),
-          codeBlockPlugin(),
-          toolbarPlugin({
-            toolbarContents: () => (
-              <div className="flex flex-wrap gap-2 p-2 bg-slate-800 border-b border-slate-700">
-                <UndoRedo />
-                <BoldItalicUnderlineToggles />
-                <BlockTypeSelect />
-                <CreateLink />
-                <InsertImage />
-                <InsertTable />
-                <InsertThematicBreak />
-                <ListsToggle />
-                <CodeToggle />
-              </div>
-            ),
-          }),
-        ]}
-        contentEditableClassName="prose prose-invert max-w-none min-h-[200px] p-4 border rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 bg-slate-900 text-white"
+        options={{
+          spellChecker: false,
+          toolbar: [
+            "bold", "italic", "strikethrough", "|", "heading", "|", "quote", "code", "table", "horizontal-rule", "|", "unordered-list", "ordered-list", "|", "link", "image", "|", "undo", "redo"
+          ],
+          status: false, // Disable status bar
+          promptURLs: true, // Enable prompting for image/link URLs
+          sideBySideFullscreen: false, // Disable side by side and fullscreen
+        }}
       />
     </div>
   );

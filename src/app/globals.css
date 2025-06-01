@@ -39,10 +39,16 @@
 }
 
 /* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--stake-bg);
   color: var(--stake-text);
   font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Utility classes */
@@ -57,110 +63,165 @@ body {
 .stake-text-gradient {
   background: var(--stake-gradient-primary);
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: transparent;
 }
 
+/* Card styles */
 .stake-card {
   background: var(--stake-bg-card);
+  border: 1px solid var(--stake-bg-card-light);
   border-radius: 1rem;
-  box-shadow: var(--stake-shadow);
+  padding: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.stake-card-light {
-  background: var(--stake-bg-card-light);
-  border-radius: 1rem;
+.stake-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--stake-shadow-lg);
+  border-color: var(--stake-yellow);
 }
 
 /* Button styles */
-.stake-btn {
+.stake-button {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.stake-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.stake-button:active::after {
+  width: 200%;
+  height: 200%;
+}
+
+.stake-button-primary {
   background: var(--stake-yellow);
   color: var(--stake-text-dark);
-  border-radius: 0.75rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
 }
 
-.stake-btn:hover {
-  background: var(--stake-yellow-dark);
+.stake-button-primary:hover {
+  background: var(--stake-yellow-light);
   transform: translateY(-1px);
+  box-shadow: var(--stake-shadow);
 }
 
-.stake-btn-secondary {
-  background: var(--stake-bg-card-light);
-  color: var(--stake-text);
-  border-radius: 0.75rem;
-  font-weight: 600;
-  transition: all 0.2s ease;
-}
-
-.stake-btn-secondary:hover {
+.stake-button-secondary {
   background: var(--stake-bg-card);
+  color: var(--stake-text);
+  border: 1px solid var(--stake-bg-card-light);
+}
+
+.stake-button-secondary:hover {
+  background: var(--stake-bg-card-light);
   transform: translateY(-1px);
-}
-
-/* Animation keyframes */
-@keyframes pulse {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
-}
-
-@keyframes slideIn {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-@keyframes slideOut {
-  from { transform: translateX(0); }
-  to { transform: translateX(-100%); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+  border-color: var(--stake-yellow);
 }
 
 /* Animation classes */
-.animate-pulse {
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+
+.stake-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(251, 191, 36, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(251, 191, 36, 0); }
+}
+
+.stake-pulse {
   animation: pulse 2s infinite;
 }
 
-.mobile-menu-overlay {
-  animation: fadeIn 0.3s ease-in-out;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.mobile-menu-overlay.closing {
-  animation: fadeOut 0.3s ease-in-out;
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out forwards;
 }
 
-.mobile-menu-content {
-  animation: slideIn 0.3s ease-in-out;
+/* Scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.mobile-menu-content.closing {
-  animation: slideOut 0.3s ease-in-out;
+::-webkit-scrollbar-track {
+  background: var(--stake-bg);
 }
 
-/* Accessibility improvements */
-@media (prefers-reduced-motion: reduce) {
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+::-webkit-scrollbar-thumb {
+  background: var(--stake-bg-card-light);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--stake-yellow);
+}
+
+/* Text selection */
+::selection {
+  background: var(--stake-yellow);
+  color: var(--stake-text-dark);
+}
+
+/* Loading animation */
+@keyframes loading {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.stake-loading {
+  animation: loading 1s linear infinite;
+}
+
+/* Transitions */
+.stake-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stake-transition-slow {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Focus styles */
-:focus-visible {
-  outline: 2px solid var(--stake-yellow);
-  outline-offset: 2px;
+.stake-focus {
+  outline: none;
+  ring: 2px;
+  ring-color: var(--stake-yellow);
+  ring-offset: 2px;
+  ring-offset-color: var(--stake-bg);
+}
+
+/* Responsive text */
+@media (max-width: 640px) {
+  html { font-size: 14px; }
+}
+
+@media (min-width: 1536px) {
+  html { font-size: 18px; }
 }
 
 /* Selection styles */

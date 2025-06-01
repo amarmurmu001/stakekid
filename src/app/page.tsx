@@ -145,6 +145,131 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+
+      {/* Features Section */}
+      <section id="features" className="py-20 px-4 bg-slate-800/50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Premium Features</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-slate-800 p-6 rounded-xl border border-slate-700"
+              >
+                {feature.icon}
+                <h3 className="text-xl font-semibold mt-4 mb-2">{feature.title}</h3>
+                <p className="text-slate-400">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Games Section */}
+      <section id="games" className="py-20 px-4">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Supported Games</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {games.map((game, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="bg-slate-800 p-6 rounded-xl border border-slate-700 text-center"
+              >
+                {game.icon}
+                <h3 className="text-lg font-semibold mt-3 mb-1">{game.name}</h3>
+                <p className="text-yellow-500 font-medium">Win Rate: {game.win}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Tools Section */}
+      <section id="tools" className="py-20 px-4 bg-slate-800/50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Smart Tools</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {miniTools.map((tool, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-slate-800 p-6 rounded-xl border border-slate-700"
+              >
+                {tool.icon}
+                <h3 className="text-xl font-semibold mt-4 mb-2">{tool.title}</h3>
+                <p className="text-slate-400">{tool.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="py-20 px-4">
+        <div className="container mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+          <div className="space-y-4">
+            {faqs.map((faq, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                className="bg-slate-800 rounded-lg border border-slate-700 overflow-hidden"
+              >
+                <button
+                  className="w-full px-6 py-4 text-left flex items-center justify-between"
+                  onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                >
+                  <span className="font-medium">{faq.q}</span>
+                  <FaChevronDown
+                    className={`transform transition-transform ${
+                      openFaq === index ? 'rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {openFaq === index && (
+                  <div className="px-6 pb-4 text-slate-300">{faq.a}</div>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 px-4 bg-slate-800/50 border-t border-slate-800">
+        <div className="container mx-auto max-w-6xl">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex items-center space-x-2 mb-4 md:mb-0">
+              <FaGift className="text-yellow-500 text-2xl" />
+              <span className="text-xl font-bold">StakeKid</span>
+            </div>
+            <div className="flex space-x-6">
+              <a href="#" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                <FaDiscord className="text-xl" />
+              </a>
+              <a href="#" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                <FaTelegram className="text-xl" />
+              </a>
+              <a href="#" className="text-slate-400 hover:text-yellow-500 transition-colors">
+                <FaTwitter className="text-xl" />
+              </a>
+            </div>
+          </div>
+          <div className="mt-8 text-center text-slate-400 text-sm">
+            © {new Date().getFullYear()} StakeKid. All rights reserved.
+          </div>
+        </div>
+      </footer>
     </main>
   );
 }
